@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+        name: {{ .Release.Name }}-drupal
+        labels:
+                app: drupal
+spec:
+        replicas: {{ .Values.drupal.replicas }}
+        selector:
+                matchLabels:
+                        app: drupal
+        template:
+                metadata:
+                        labels:
+                                app: drupal
+                spec:
+                        containers:
+                                - name: drupal
+                                  image: {{ .Values.drupal.image }}
+                                  env:
+                                          - name: DRUPAL_USERNAME
+                                            value: {{ .Values.drupal.drupalUsername }}
+                                          - name: DRUPAL_PASSWORD
+                                            value: {{ .Values.drupal.drupalPassword }}
+                                          - name: DRUPAL_EMAIL
+                                            value: {{ .Values.drupal.drupalEmail }}
+                                  ports:
+                                          - containerPort: {{ .Values.drupal.port }}
+

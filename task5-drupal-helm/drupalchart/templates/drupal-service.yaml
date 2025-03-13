@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+        name: {{ .Release.Name }}-drupal
+spec:
+        selector:
+                app: drupal
+        ports:
+                - protocol: TCP
+                  port: {{ .Values.drupal.port }}
+                  targetPort: {{ .Values.drupal.port }}
+        type: NodePort

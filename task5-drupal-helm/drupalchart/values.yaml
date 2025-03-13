@@ -1,0 +1,18 @@
+drupal:
+        image: drupal:latest
+        port: 80
+        replicas: 1
+        drupalUsername: admin
+        drupalPassword: admin
+        drupalEmail: admin@example.com
+
+
+mysql:
+        image: mysql:latest
+        port: 3306
+        rootPassword: priya
+        database: drupalsql
+        mysqlUsername: priya
+        presistence:
+                enabled: true
+                size: 1Gi

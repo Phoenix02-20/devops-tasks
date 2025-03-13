@@ -1,0 +1,29 @@
+pipeline {
+  agent any
+  environment {
+    DOCKERHUB_CREDENTIALS = credentials('dockerhub')
+  }
+  stages {
+    stage ('Build') {
+      steps {
+        sh 'docker build -t priya20xenonstack/drupal-jenkins .'
+        echo "image has been built successfully"
+      }
+    }
+    stage ('login') {
+      steps {
+        sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+      }
+    }
+    stage ('push') {
+      steps {
+        sh 'docker push priya20xenonstack/drupal-jenkins'
+      }
+    }
+  }
+  post {
+      always {
+        sh 'docker logout'
+      }
+    }
+}
